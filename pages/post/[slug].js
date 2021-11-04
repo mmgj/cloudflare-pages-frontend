@@ -18,11 +18,11 @@ const postQuery = groq`
 export default function Post({ data, preview }) {
   const router = useRouter();
 
-  // const { data: post } = usePreviewSubscription(postQuery, {
-  //   params: { slug: data.post?.slug },
-  //   initialData: data.post,
-  //   enabled: preview && data.post?.slug,
-  // });
+  const { data: post } = usePreviewSubscription(postQuery, {
+    params: { slug: data.post?.slug },
+    initialData: data.post,
+    enabled: preview && data.post?.slug,
+  });
 
   if (!router.isFallback && !data.post?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -61,6 +61,6 @@ export async function getStaticPaths() {
 
   return {
     paths: paths.map((slug) => ({ params: { slug } })),
-    fallback: true,
+    fallback: false,
   };
 }
