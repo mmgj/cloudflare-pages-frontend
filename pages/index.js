@@ -1,34 +1,41 @@
-import Head from 'next/head'
-
-import Post from '../components/post'
-
-export async function getStaticProps() {
-  // fetch list of posts
-  const response = await fetch(
-    'https://jsonplaceholder.typicode.com/posts?_page=1'
-  )
-  const postList = await response.json()
-  return {
-    props: {
-      postList,
-    },
-  }
-}
+import Head from 'next/head';
+import { groq } from 'next-sanity';
+import { getClient } from '../lib/sanity.server';
+import PostPreview from '../components/post-preview';
+import Wrap from '../components/Wrap';
 
 export default function IndexPage({ postList }) {
   return (
-    <main>
-      <Head>
-        <title>Home page</title>
-      </Head>
+    <Wrap title='Home Page'>
+      <main>
+        <h1>List of posts</h1>
+        <section>
+          {postList &&
+            postList.map((post) => <PostPreview {...post} key={post._id} />)}
+        </section>
+      </main>
+    </Wrap>
+  );
+}
 
-      <h1>List of posts</h1>
-
-      <section>
-        {postList.map((post) => (
-          <Post {...post} key={post.id} />
-        ))}
-      </section>
-    </main>
-  )
+export async function getStaticProps() {
+  const paths = await getClient().fetch(
+    groq`*[_type == "post" && defined(slug.current)]{
+      _id,
+      summary,
+      title,
+    "slug": slug.current
+  }`
+  );
+  return {
+    props: {
+      postList: paths.map(({ slug, title, summary, _id }) => ({
+        slug,
+        summary,
+        title,
+        _id,
+      })),
+      fallback: false,
+    },
+  };
 }
