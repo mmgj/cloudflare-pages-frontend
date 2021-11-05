@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { groq } from 'next-sanity';
 
 import { urlFor, PortableText, sanityClient } from '../../lib/sanity';
-import Wrap from '../../components/wrap';
+import Wrap from '../../components/head-wrap';
 
 const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {

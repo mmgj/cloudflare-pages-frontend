@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { groq } from 'next-sanity';
 import { sanityClient, urlFor } from '../lib/sanity';
-import Wrap from '../components/wrap';
+import Wrap from '../components/head-wrap';
 
 export async function getStaticProps() {
   const paths = await sanityClient.fetch(
