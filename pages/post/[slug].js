@@ -56,7 +56,7 @@ export default function Post({ data }) {
       <article>
         <h1>{title}</h1>
         <figure style={{ padding: 0, margin: 0 }}>
-          <img src={urlFor(mainImage).url()} />
+          <img alt={title} src={urlFor(mainImage).url()} />
         </figure>
         <PortableText blocks={body} />
       </article>

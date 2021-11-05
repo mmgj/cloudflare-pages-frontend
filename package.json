@@ -14,5 +14,9 @@
     "export": "next export",
     "prestart": "npm run export",
     "start": "serve out"
+  },
+  "devDependencies": {
+    "eslint": "7.32.0",
+    "eslint-config-next": "12.0.2"
   }
 }
