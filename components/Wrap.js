@@ -10,7 +10,7 @@ const Wrap = ({ children, title }) => {
           href='https://cdn.jsdelivr.net/npm/water.css@2/out/water.css'
         />
       </Head>
-      <>{children}</>
+      {children}
     </>
   );
 };
